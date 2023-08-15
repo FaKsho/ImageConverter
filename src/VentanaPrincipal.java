@@ -113,6 +113,7 @@ public class VentanaPrincipal extends JFrame {
                 fileNameOut.setText(archivo.getName());
                 fileDirOut.setText(archivo.getAbsolutePath());
 
+                System.out.println("owo");
             }
         }
     }
