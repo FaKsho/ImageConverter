@@ -18,13 +18,10 @@ public class VentanaPrincipal extends JFrame {
 
     VentanaPrincipal(){
 
-        // Temporal //
-        fileIn = new File("testFiles/necoarc.jpeg");
-
         // SETUP //
         setLayout(null);
 
-        setSize(600,350);
+        setSize(600,300);
         setTitle("FKFileConverter");
 
 
@@ -36,45 +33,49 @@ public class VentanaPrincipal extends JFrame {
 
         // Título //
         title = new JLabel("FKFileConverter");
-        title.setBounds(150,10,300,50);
+        title.setBounds(75,20,300,50);
         title.setFont(titleFont);
 
 
         // Nombre de los archivos //
-        fileNameIn = new JLabel("<File Name In>");
+        fileNameIn = new JLabel("<Seleccione archivo a convertir>");
         fileNameIn.setBounds(80,80,300,30);
         fileNameIn.setFont(fileNameFont);
-        fileNameIn.setText(fileIn.getName()); // temp
 
-        fileNameOut = new JLabel("<File Name Out>");
+        fileNameOut = new JLabel("<Seleccione directorio de salida>");
         fileNameOut.setBounds(80,140,300,30);
         fileNameOut.setFont(fileNameFont);
 
 
         // Directorio de los archivos //
-        fileDirIn = new JTextField("<File Dir In>");
+        fileDirIn = new JTextField("Elegir archivo...");
         //fileDirOut.setFont(fileDirFont);
         fileDirIn.setEditable(false);
-        fileDirIn.setBounds(80,105,340,20);
-        fileDirIn.setText(fileIn.getAbsolutePath()); // temp
+        fileDirIn.setBounds(75,105,320,20);
 
-        fileDirOut = new JTextField("<File Dir Out>");
+        fileDirOut = new JTextField("Guardar en...");
         //fileDirOut.setFont(fileDirFont);
         fileDirOut.setEditable(false);
-        fileDirOut.setBounds(80,165,340,20);
+        fileDirOut.setBounds(75,165,320,20);
 
 
         // Botones //
+
+        //*Selectores de archivos
         EventosBotones fileSelector = new EventosBotones();
 
         openFileInSelector = new JButton("<");
-        openFileInSelector.setBounds(420,105,30,20);
+        openFileInSelector.setBounds(400,105,30,20);
         openFileInSelector.addActionListener(fileSelector);
 
         openFileOutDirSelector = new JButton("<");
-        openFileOutDirSelector.setBounds(420,165,30,20);
+        openFileOutDirSelector.setBounds(400,165,30,20);
         openFileOutDirSelector.addActionListener(fileSelector);
 
+        //*Convertir
+        convertB = new JButton("Convertir");
+        convertB.setBounds(75,210,150,30);
+        convertB.addActionListener(fileSelector);
 
         // Selector de extensiones //
         comboBox = new JComboBox();
@@ -89,6 +90,7 @@ public class VentanaPrincipal extends JFrame {
 
         add(openFileInSelector);
         add(openFileOutDirSelector);
+        add(convertB);
     }
 
     public class EventosBotones implements ActionListener {

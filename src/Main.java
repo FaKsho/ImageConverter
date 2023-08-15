@@ -5,7 +5,7 @@ public class Main {
 
         VentanaPrincipal ventana = new VentanaPrincipal();
 
-        ventana.setTitle("ImageConverter");
+        ventana.setTitle("FKFileConverter");
         ventana.setVisible(true);
 
 
