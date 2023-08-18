@@ -9,7 +9,7 @@ public class VentanaPrincipal extends JFrame {
     JLabel title, fileNameIn, fileNameOut, resultAnnounceText;
     JButton openFileInSelector, openFileOutDirSelector, convertB;
     JTextField fileDirIn, fileDirOut;
-    JComboBox comboBox;
+    JComboBox extensiones;
     Font titleFont = new Font("Andale Mono", 1, 35);
     Font fileNameFont = new Font("Andale Mono", 1, 12);
     Font fileDirFont = new Font("Andale Mono", 1, 14);
@@ -77,21 +77,27 @@ public class VentanaPrincipal extends JFrame {
         convertB.addActionListener(fileSelector);
 
         // Selector de extensiones //
-        comboBox = new JComboBox();
-        comboBox.setBounds(440, 135, 70, 20);
+        extensiones = new JComboBox();
+        extensiones.setBounds(440, 135, 70, 20);
+        extensiones.addItem("");
+        extensiones.addItem("JPG");
+        extensiones.addItem("JPEG");
+        extensiones.addItem("PNG");
+        extensiones.addItem("BPM");
+        extensiones.addItem("WBMP");
+        extensiones.addItem("GIF");
 
         // Label Anunciante //
         resultAnnounceText = new JLabel("En espera...");
         resultAnnounceText.setForeground(Color.LIGHT_GRAY);
         resultAnnounceText.setBounds(250,210,250,30);
 
-
         add(title);
         add(fileNameIn);
         add(fileNameOut);
         add(fileDirIn);
         add(fileDirOut);
-        add(comboBox);
+        add(extensiones);
 
         add(openFileInSelector);
         add(openFileOutDirSelector);
@@ -107,6 +113,33 @@ public class VentanaPrincipal extends JFrame {
 
             File archivoIn = new File("...");
             File archivoOut = new File("...");
+
+            int extensionIndex = extensiones.getSelectedIndex();
+
+            switch (extensionIndex){
+                case 0:
+                    if(e.getSource() == convertB) { JOptionPane.showMessageDialog(null,"Seleccione el formato a convertir"); }
+                    break;
+                case 1:
+                    definitiveFormat = "JPG";
+                    break;
+                case 2:
+                    definitiveFormat = "JPEG";
+                    break;
+                case 3:
+                    definitiveFormat = "PNG";
+                    break;
+                case 4:
+                    definitiveFormat = "BPM";
+                    break;
+                case 5:
+                    definitiveFormat = "WBMP";
+                    break;
+                case 6:
+                    definitiveFormat = "GIF";
+                    break;
+
+            }
 
             if(e.getSource() == openFileInSelector){
 
@@ -135,11 +168,11 @@ public class VentanaPrincipal extends JFrame {
 
             if(e.getSource() == convertB){
 
-                if(inFileIsSelected == true && outPathIsSelected == true){
+                if(inFileIsSelected == true && outPathIsSelected == true && definitiveFormat != null){
 
 
                     try{
-                        ImageConverter.convert(imageInPath,imageOutPath,"JPEG");
+                        ImageConverter.convert(imageInPath,imageOutPath,definitiveFormat);
 
                         resultAnnounceText.setText("Convertido correctamente");
                         resultAnnounceText.setForeground(Color.GREEN);
@@ -159,9 +192,9 @@ public class VentanaPrincipal extends JFrame {
             }
         }
 
-
         private boolean inFileIsSelected, outPathIsSelected;
         private String imageInPath, imageOutPath;
+        private String definitiveFormat;
     }
 
 }
