@@ -46,5 +46,7 @@ public class ImageConverter {/**
         inputStream.close();
 
         return result;
+
     }
+
 }

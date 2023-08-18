@@ -130,7 +130,7 @@ public class VentanaPrincipal extends JFrame {
                     definitiveFormat = "PNG";
                     break;
                 case 4:
-                    definitiveFormat = "BPM";
+                    definitiveFormat = "BMP";
                     break;
                 case 5:
                     definitiveFormat = "WBMP";
@@ -158,7 +158,6 @@ public class VentanaPrincipal extends JFrame {
 
                 archivoOut = fc.pathOutSelector(openFileOutDirSelector);
 
-                fileNameOut.setText(archivoOut.getName());
                 fileDirOut.setText(archivoOut.getAbsolutePath());
                 imageOutPath = archivoOut.getAbsolutePath();
                 System.out.println(imageOutPath);
@@ -166,10 +165,11 @@ public class VentanaPrincipal extends JFrame {
                 outPathIsSelected = true;
             }
 
+            fileNameOut.setText(archivoIn.getName() + "_converted." + definitiveFormat);
+
             if(e.getSource() == convertB){
 
                 if(inFileIsSelected == true && outPathIsSelected == true && definitiveFormat != null){
-
 
                     try{
                         ImageConverter.convert(imageInPath,imageOutPath,definitiveFormat);
