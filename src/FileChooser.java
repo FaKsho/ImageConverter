@@ -4,7 +4,7 @@ import java.io.*;
 
 public class FileChooser {
 
-    public File fileInSelector( Component parent ) {
+    public File fileInSelector( Component parent ) { // devolver imagen mejor lpm
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode( JFileChooser.FILES_AND_DIRECTORIES );
 

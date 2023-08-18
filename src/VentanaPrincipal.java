@@ -105,14 +105,17 @@ public class VentanaPrincipal extends JFrame {
 
         public void actionPerformed(ActionEvent e){
 
-            File archivo = new File("...");
+            File archivoIn = new File("...");
+            File archivoOut = new File("...");
 
             if(e.getSource() == openFileInSelector){
 
-                archivo = fc.fileInSelector(openFileInSelector);
+                archivoIn = fc.fileInSelector(openFileInSelector);
 
-                fileNameIn.setText(archivo.getName());
-                fileDirIn.setText(archivo.getAbsolutePath());
+                fileNameIn.setText(archivoIn.getName());
+                fileDirIn.setText(archivoIn.getAbsolutePath());
+                imageInPath = archivoIn.getAbsolutePath();
+                System.out.println(imageInPath);
 
                 inFileIsSelected = true;
 
@@ -120,10 +123,12 @@ public class VentanaPrincipal extends JFrame {
 
             if(e.getSource() == openFileOutDirSelector){
 
-                archivo = fc.fileInSelector(openFileOutDirSelector);
+                archivoOut = fc.pathOutSelector(openFileOutDirSelector);
 
-                fileNameOut.setText(archivo.getName());
-                fileDirOut.setText(archivo.getAbsolutePath());
+                fileNameOut.setText(archivoOut.getName());
+                fileDirOut.setText(archivoOut.getAbsolutePath());
+                imageOutPath = archivoOut.getAbsolutePath();
+                System.out.println(imageOutPath);
 
                 outPathIsSelected = true;
             }
@@ -132,22 +137,31 @@ public class VentanaPrincipal extends JFrame {
 
                 if(inFileIsSelected == true && outPathIsSelected == true){
 
-                    System.out.println("Opciones seleccionadas correctamente");
 
-                    ImageConverter.convert(archivo,fileDirOut.getText());
+                    try{
+                        ImageConverter.convert(imageInPath,imageOutPath,"JPEG");
 
-                    resultAnnounceText.setText("Convertido correctamente");
-                    resultAnnounceText.setForeground(Color.GREEN);
+                        resultAnnounceText.setText("Convertido correctamente");
+                        resultAnnounceText.setForeground(Color.GREEN);
+
+                    } catch (IOException ioE){
+
+                        System.out.println(ioE);
+                        resultAnnounceText.setText("Hubo un problema en la conversión");
+                        resultAnnounceText.setForeground(Color.RED);
+                    }
+
                 } else {
 
                     resultAnnounceText.setText("Termine de elegir los campos");
-                    resultAnnounceText.setForeground(Color.RED);
+                    resultAnnounceText.setForeground(Color.ORANGE);
                 }
             }
         }
 
 
         private boolean inFileIsSelected, outPathIsSelected;
+        private String imageInPath, imageOutPath;
     }
 
 }

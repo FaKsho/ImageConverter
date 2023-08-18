@@ -1,27 +1,50 @@
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import javax.imageio.*;
 import java.io.*;
 
-public class ImageConverter {
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
-    public static void convert(File inFile, String outPath){
+import javax.imageio.ImageIO;
 
-        //png to jpg
-        File inputFile = inFile;
-        File outputFile = new File(outPath);
+public class ImageConverter {/**
+     * https://www.codejava.net/java-se/graphics/convert-image-formats
+     *
+     * Converts an image to another format
+     *
+     * @param inputImagePath Path of the source image
+     * @param outputImagePath Path of the destination image
+     * @param formatName the format to be converted to, one of: jpeg, png,
+     * bmp, wbmp, and gif
+     * @return true if successful, false otherwise
+     * @throws IOException if errors occur during writing
+     */
+    public static boolean convert(String inputImagePath, String outputImagePath, String formatName)
+            throws IOException {
 
-        try (InputStream is = new FileInputStream(inputFile)) {
+        FileInputStream inputStream = new FileInputStream(inputImagePath);
 
-            BufferedImage image = ImageIO.read(is);
-            try (OutputStream os = new FileOutputStream(outputFile)) {
-                ImageIO.write(image, "jpg", os);
-            } catch (Exception exp) {
-                exp.printStackTrace();
-            }
-        } catch (Exception exp) {
-            exp.printStackTrace();
-            System.out.println("Error de conversión");
-        }
+        String inputFileName = new File(inputImagePath).getName();
+
+        String fullOutputPath = outputImagePath + File.separator + inputFileName + "_converted." + formatName;
+
+        FileOutputStream outputStream = new FileOutputStream(fullOutputPath);
+
+
+        // reads input image from file
+        BufferedImage inputImage = ImageIO.read(inputStream);
+
+        // writes to the output image in specified format
+        boolean result = ImageIO.write(inputImage, formatName, outputStream);
+
+        // needs to close the streams
+        outputStream.close();
+        inputStream.close();
+
+        return result;
     }
 }
