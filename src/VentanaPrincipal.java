@@ -1,3 +1,5 @@
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,14 +8,16 @@ import java.io.*;
 import java.util.concurrent.BrokenBarrierException;
 
 public class VentanaPrincipal extends JFrame {
-    JLabel title, fileNameIn, fileNameOut, resultAnnounceText;
-    JButton openFileInSelector, openFileOutDirSelector, convertB;
-    JTextField fileDirIn, fileDirOut;
-    JComboBox extensiones;
-    Font titleFont = new Font("Andale Mono", 1, 35);
-    Font fileNameFont = new Font("Andale Mono", 1, 12);
-    Font fileDirFont = new Font("Andale Mono", 1, 14);
-    File fileIn, fileOut;
+    private JLabel title, fileNameIn, fileNameOut, resultAnnounceText;
+    private JButton openFileInSelector, openFileOutDirSelector, convertB;
+    private JTextField fileDirIn, fileDirOut;
+    private JMenuBar menuBar;
+    private JMenu inicio, help;
+    private JMenuItem exit, about;
+    private JComboBox extensiones;
+    private Font titleFont = new Font("Andale Mono", 1, 35);
+    private Font fileNameFont = new Font("Andale Mono", 1, 12);
+    private Font fileDirFont = new Font("Andale Mono", 1, 14);
     FileChooser fc = new FileChooser();
 
     VentanaPrincipal(){
@@ -21,7 +25,7 @@ public class VentanaPrincipal extends JFrame {
         // SETUP //
         setLayout(null);
 
-        setSize(600,300);
+        setSize(600,330);
         setTitle("FKFileConverter");
 
         setBackground(Color.LIGHT_GRAY.brighter());
@@ -29,6 +33,7 @@ public class VentanaPrincipal extends JFrame {
         //setResizable(false);
 
         setLocationRelativeTo(null);
+
 
         // Título //
         title = new JLabel("FKFileConverter");
@@ -91,6 +96,26 @@ public class VentanaPrincipal extends JFrame {
         resultAnnounceText = new JLabel("En espera...");
         resultAnnounceText.setForeground(Color.LIGHT_GRAY);
         resultAnnounceText.setBounds(250,210,250,30);
+
+        // MenuBar //
+        menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        inicio = new JMenu("Inicio");
+        help = new JMenu("Ayuda");
+
+        exit = new JMenuItem("Salir");
+        inicio.add(exit);
+        exit.addActionListener(new EventosBotones());
+
+        about = new JMenuItem("Acerca de");
+        help.add(about);
+        about.addActionListener(new EventosBotones());
+
+        menuBar.add(inicio);
+        menuBar.add(help);
+
+        // Agregado de Items //
 
         add(title);
         add(fileNameIn);
@@ -165,7 +190,7 @@ public class VentanaPrincipal extends JFrame {
                 outPathIsSelected = true;
             }
 
-            fileNameOut.setText(archivoIn.getName() + "_converted." + definitiveFormat);
+            // fileNameOut.setText(archivoIn.getName() + "_converted." + definitiveFormat);
 
             if(e.getSource() == convertB){
 
@@ -190,6 +215,21 @@ public class VentanaPrincipal extends JFrame {
                     resultAnnounceText.setForeground(Color.ORANGE);
                 }
             }
+
+            if(e.getSource() == exit){
+
+                System.exit(0);
+            }
+
+            if(e.getSource() == about){
+
+                JOptionPane.showMessageDialog(null,"       by FaKsho", "Acerca de", JOptionPane.PLAIN_MESSAGE,null);
+            }
+        }
+
+        public void actionPerformed2(ActionEvent e){
+
+
         }
 
         private boolean inFileIsSelected, outPathIsSelected;
